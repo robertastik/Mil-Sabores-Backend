@@ -1,15 +1,14 @@
 package com.ms_backend.mil_sabores_backend.service;
 
+import com.ms_backend.mil_sabores_backend.model.Producto;
+import com.ms_backend.mil_sabores_backend.repository.ProductoRepository;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ms_backend.mil_sabores_backend.model.Producto;
-import com.ms_backend.mil_sabores_backend.repository.ProductoRepository;
-
 @Service
 public class ProductoService {
+
     @Autowired
     private ProductoRepository productoRepo;
 

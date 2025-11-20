@@ -21,9 +21,18 @@ public class Producto {
     @Column(nullable = false, length = 50)
     private String nombre;
 
+    @Column(nullable = false)
     private String categoria;
+
+    @Column(nullable = false)
     private String descripcion;
+
+    @Column(nullable = false)
     private Double precio;
+
+    @Column(nullable = false)
     private String ingredientes;
+
+    @Column(nullable = false)
     private String imagenUrl;
 }

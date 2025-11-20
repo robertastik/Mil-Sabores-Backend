@@ -21,11 +21,21 @@ public class Usuario {
     @Column(nullable = false, length = 50)
     private String nombre;
 
+    @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String fechaNacimiento;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
     private Integer edad;
+
     private Boolean isDuoc;
+
     private Boolean felicesCincuenta;
+
     private String preferencias;
 }

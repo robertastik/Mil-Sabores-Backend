@@ -1,7 +1,8 @@
 package com.ms_backend.mil_sabores_backend.controller;
 
+import com.ms_backend.mil_sabores_backend.model.Producto;
+import com.ms_backend.mil_sabores_backend.service.ProductoService;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,12 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ms_backend.mil_sabores_backend.model.Producto;
-import com.ms_backend.mil_sabores_backend.service.ProductoService;
-
 @RestController
-@RequestMapping("/api/v1/productos")
+@RequestMapping("/api/productos")
 public class ProductoController {
+
     @Autowired
     private ProductoService productoService;
 
@@ -37,7 +36,9 @@ public class ProductoController {
     }
 
     @PutMapping("/{id}")
-    public Producto actualizarProducto(@PathVariable Long id, @RequestBody Producto producto) {
+    public Producto actualizarProducto(
+            @PathVariable Long id,
+            @RequestBody Producto producto) {
         return productoService.actualizarProducto(id, producto);
     }
 
