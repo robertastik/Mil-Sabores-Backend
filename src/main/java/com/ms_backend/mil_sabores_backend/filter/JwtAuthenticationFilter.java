@@ -1,6 +1,5 @@
 package com.ms_backend.mil_sabores_backend.filter;
 
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.ms_backend.mil_sabores_backend.service.JwtService;
 import com.ms_backend.mil_sabores_backend.service.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
