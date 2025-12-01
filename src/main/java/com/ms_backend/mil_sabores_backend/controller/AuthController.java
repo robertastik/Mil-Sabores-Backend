@@ -12,6 +12,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -52,6 +54,37 @@ public class AuthController {
             return ResponseEntity.ok(nuevoUsuario);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error al registrar: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<?> getProfile(@AuthenticationPrincipal UserDetails userDetails) {
+        try {
+            Usuario usuario = usuarioService.obtenerUsuarioPorEmail(userDetails.getUsername());
+            if (usuario == null) {
+                return ResponseEntity.notFound().build();
+            }
+            usuario.setPassword(null); // Don't expose password
+            return ResponseEntity.ok(usuario);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al obtener perfil: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/profile")
+    public ResponseEntity<?> updateProfile(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody Usuario usuarioActualizado) {
+        try {
+            Usuario usuario = usuarioService.obtenerUsuarioPorEmail(userDetails.getUsername());
+            if (usuario == null) {
+                return ResponseEntity.notFound().build();
+            }
+            Usuario actualizado = usuarioService.actualizarUsuario(usuario.getId_user(), usuarioActualizado);
+            actualizado.setPassword(null); // Don't expose password
+            return ResponseEntity.ok(actualizado);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al actualizar perfil: " + e.getMessage());
         }
     }
 }

@@ -24,6 +24,10 @@ public class UsuarioService {
         return usuarioRepo.findById(id).orElse(null);
     }
 
+    public Usuario obtenerUsuarioPorEmail(String email) {
+        return usuarioRepo.findByEmail(email).orElse(null);
+    }
+
     public List<Usuario> crearUsuario(List<Usuario> usuarios) {
         return usuarioRepo.saveAll(usuarios);
     }
