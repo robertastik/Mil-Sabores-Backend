@@ -21,10 +21,37 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Post> createPost(@RequestBody Post post, Principal principal) {
+    public ResponseEntity<?> createPost(@RequestBody Post post, Principal principal) {
+        System.out.println("=== POST /api/posts received ===");
+        System.out.println("Principal: " + principal);
+        if (principal == null) {
+            return ResponseEntity.status(403).body("No authenticated user");
+        }
         String autorEmail = principal.getName();
+        System.out.println("Autor email: " + autorEmail);
         
-        Post nuevoPost = postService.createPost(post, autorEmail);
-        return ResponseEntity.ok(nuevoPost);
+        try {
+            Post nuevoPost = postService.createPost(post, autorEmail);
+            return ResponseEntity.ok(nuevoPost);
+        } catch (Exception e) {
+            System.err.println("Error creating post: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePost(@PathVariable Long id, Principal principal) {
+        try {
+            String userEmail = principal.getName();
+            boolean deleted = postService.deletePost(id, userEmail);
+            if (deleted) {
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (SecurityException e) {
+            return ResponseEntity.status(403).body(e.getMessage());
+        }
     }
 }

@@ -30,8 +30,9 @@ public class Post {
     @Column(nullable = false, length = 50)
     private String categoria; 
 
-    @Column(nullable = false)
-    private String autorEmail; 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "autor_id", nullable = false)
+    private Usuario autor;
 
     @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")

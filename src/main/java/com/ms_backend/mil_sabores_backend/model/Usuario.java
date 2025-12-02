@@ -1,5 +1,7 @@
 package com.ms_backend.mil_sabores_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +29,7 @@ public class Usuario {
     @Column(nullable = false)
     private String fechaNacimiento;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 

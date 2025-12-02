@@ -87,4 +87,12 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Error al actualizar perfil: " + e.getMessage());
         }
     }
+
+    @GetMapping("/test")
+    public ResponseEntity<?> testAuth(@AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails == null) {
+            return ResponseEntity.ok("No authenticated user");
+        }
+        return ResponseEntity.ok("Authenticated as: " + userDetails.getUsername());
+    }
 }

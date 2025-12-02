@@ -14,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -36,9 +35,10 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 
                 .authorizeHttpRequests(authRequest -> authRequest
-                    .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/api/auth/**")).permitAll()
-                    .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/api/productos/**")).permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/posts").permitAll()
+                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                    .requestMatchers("/api/auth/**").permitAll()
+                    .requestMatchers("/api/productos/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/posts", "/api/posts/**").permitAll()
                     .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManager -> 
