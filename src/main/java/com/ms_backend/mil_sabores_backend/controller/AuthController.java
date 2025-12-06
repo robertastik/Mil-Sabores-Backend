@@ -64,7 +64,7 @@ public class AuthController {
             if (usuario == null) {
                 return ResponseEntity.notFound().build();
             }
-            usuario.setPassword(null); // Don't expose password
+            usuario.setPassword(null);
             return ResponseEntity.ok(usuario);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error al obtener perfil: " + e.getMessage());
@@ -81,7 +81,7 @@ public class AuthController {
                 return ResponseEntity.notFound().build();
             }
             Usuario actualizado = usuarioService.actualizarUsuario(usuario.getId_user(), usuarioActualizado);
-            actualizado.setPassword(null); // Don't expose password
+            actualizado.setPassword(null); 
             return ResponseEntity.ok(actualizado);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error al actualizar perfil: " + e.getMessage());
