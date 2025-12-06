@@ -1,6 +1,6 @@
 # 🍰 Mil Sabores - Backend
 
-API REST para la aplicación Mil Sabores, una plataforma de pastelería que permite a los usuarios explorar productos, gestionar su perfil y participar en un blog comunitario.
+API REST para la aplicación Mil Sabores, una plataforma de pastelería (ficticia) que permite a los usuarios explorar productos, gestionar su perfil y participar en un blog comunitario.
 
 ## 📋 Descripción
 
