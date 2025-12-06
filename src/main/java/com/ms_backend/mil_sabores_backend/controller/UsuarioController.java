@@ -4,10 +4,12 @@ import com.ms_backend.mil_sabores_backend.model.Usuario;
 import com.ms_backend.mil_sabores_backend.service.UsuarioService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/usuarios")
+@PreAuthorize("hasRole('ADMIN')")
 public class UsuarioController {
 
     @Autowired

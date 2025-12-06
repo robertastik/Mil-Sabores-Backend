@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -23,6 +24,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Autowired
@@ -37,10 +39,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authRequest -> authRequest
                     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .requestMatchers("/api/auth/**").permitAll()
-                    .requestMatchers("/api/productos/**").permitAll()
+                    // Productos: GET público, POST/PUT/DELETE requiere ADMIN (controlado por @PreAuthorize)
+                    .requestMatchers(HttpMethod.GET, "/api/productos", "/api/productos/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/posts", "/api/posts/**").permitAll()
                     // Swagger UI
                     .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/v3/api-docs.yaml").permitAll()
+                    // Usuarios: Solo ADMIN (controlado por @PreAuthorize en el controller)
+                    .requestMatchers("/api/usuarios/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManager -> 

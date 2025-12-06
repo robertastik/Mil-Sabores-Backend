@@ -1,6 +1,6 @@
 package com.ms_backend.mil_sabores_backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,7 +29,7 @@ public class Usuario {
     @Column(nullable = false)
     private String fechaNacimiento;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false)
     private String password;
 
@@ -41,4 +41,8 @@ public class Usuario {
     private Boolean felicesCincuenta;
 
     private String preferencias;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role = Role.USER;
 }

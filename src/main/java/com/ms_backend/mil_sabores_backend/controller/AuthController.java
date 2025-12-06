@@ -39,7 +39,9 @@ public class AuthController {
                 )
             );
             String token = jwtService.generateToken(loginRequest.getEmail());
-            return ResponseEntity.ok(new AuthResponse(token, loginRequest.getEmail()));
+            Usuario usuario = usuarioService.obtenerUsuarioPorEmail(loginRequest.getEmail());
+            String role = usuario.getRole().name();
+            return ResponseEntity.ok(new AuthResponse(token, loginRequest.getEmail(), role));
 
         } catch (AuthenticationException e) {
             return ResponseEntity.status(401).body("Error: Usuario o contraseña incorrectos");
